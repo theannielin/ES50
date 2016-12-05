@@ -57,9 +57,9 @@ rgb_color hsvToRgb(uint16_t h, uint8_t s, uint8_t v)
 void setup()
 {
   // Open serial connection.
-  Serial.begin(9600);
+  Serial.begin(115200);
   pinMode(dataPin, OUTPUT);
-  Serial.write('1');
+  //Serial.write('7');
 }
 
 /* Returns a reference to the color at the specified coordinates,
@@ -78,34 +78,58 @@ rgb_color & color_at(uint8_t x, uint8_t y)
 
 void loop()
 {
-  //if(Serial.available() > 0){
+  if(Serial.available()) {
+    
     uint8_t time = millis() >> 2;
     for (uint8_t x = 0; x < ledPanelWidth; x++)
-    {
-      for (uint8_t y = 0; y < ledPanelHeight; y++)
       {
-        // The x * 20 and y * 10 terms determine the general
-        // direction and width of the rainbow, and the x * y term
-        // makes it curve a bit.
-        uint8_t p = time - x * 20 - y * 10 - x * y;
-        color_at(x, y) = hsvToRgb((uint32_t)p * 359 / 256, 255, 255);
+        for (uint8_t y = 0; y < ledPanelHeight; y++)
+        {
+          // The x * 20 and y * 10 terms determine the general
+          // direction and width of the rainbow, and the x * y term
+          // makes it curve a bit.
+          //uint8_t p = time - x * 20 - y * 10 - x * y;
+          //color_at(x, y) = hsvToRgb((uint32_t)p * 359 / 256, 255, 255);
+          color_at(x, y) = (rgb_color){0,255,0};
+        }
+      }
+    ledStrip.write(colors, ledCount, brightness);
+
+    byte c = Serial.read();
+    if (c == '7') {
+      
+      for (uint8_t x = 0; x < ledPanelWidth; x++)
+      {
+        for (uint8_t y = 0; y < ledPanelHeight; y++)
+        {
+          // The x * 20 and y * 10 terms determine the general
+          // direction and width of the rainbow, and the x * y term
+          // makes it curve a bit.
+          uint8_t p = time - x * 20 - y * 10 - x * y;
+          
+          color_at(x, y) = hsvToRgb((uint32_t)p * 359 / 256, 255, 255);
+        }
+      }
+      while (true) {
+        ledStrip.write(colors, ledCount, brightness);
+        if (Serial.available())
+           break;
       }
     }
-    ledStrip.write(colors, ledCount, brightness);
-  //}
-  /*else {
-    uint8_t time = millis() >> 2;
-    for (uint8_t x = 0; x < 2; x++)
-    {
-      for (uint8_t y = 0; y < 5; y++)
-      {
-        // The x * 20 and y * 10 terms determine the general
-        // direction and width of the rainbow, and the x * y term
-        // makes it curve a bit.
-        uint8_t p = time - x * 20 - y * 10 - x * y;
-        color_at(x, y) = hsvToRgb((uint32_t)p * 359 / 256, 255, 255);
-      }
+  } else {
+      uint8_t time = millis() >> 2;
+      for (uint8_t x = 0; x < ledPanelWidth; x++)
+        {
+          for (uint8_t y = 0; y < ledPanelHeight; y++)
+          {
+            // The x * 20 and y * 10 terms determine the general
+            // direction and width of the rainbow, and the x * y term
+            // makes it curve a bit.
+            //uint8_t p = time - x * 20 - y * 10 - x * y;
+            //color_at(x, y) = hsvToRgb((uint32_t)p * 359 / 256, 255, 255);
+            color_at(x, y) = (rgb_color){255,0,0};
+          }
+        }
+      ledStrip.write(colors, ledCount, brightness);
     }
-    ledStrip.write(colors, ledCount, brightness);
-  }*/
 }
