@@ -29,6 +29,7 @@ class OKButton:
         self.btn = Button(frame, text = "SEND",command=self.printMatrix)
 
     def printMatrix(self):
+    	# TODO: SEND STUFF!!!
     	print matrix
 
 #Create a 13x13 (rows x columns) grid of buttons inside the frame
