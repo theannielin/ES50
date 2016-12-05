@@ -22,8 +22,8 @@ const uint8_t clockPin = 12;
 APA102<dataPin, clockPin> ledStrip;
 
 // Set the size of the LED panel.
-const uint8_t ledPanelWidth = 32;
-const uint8_t ledPanelHeight = 32;
+const uint8_t ledPanelWidth = 13;
+const uint8_t ledPanelHeight = 13;
 const uint16_t ledCount = ledPanelWidth * ledPanelHeight;
 
 // Create a buffer for holding the colors (3 bytes per color).
@@ -78,7 +78,7 @@ rgb_color & color_at(uint8_t x, uint8_t y)
 
 void loop()
 {
-  if(Serial.available() > 0){
+  //if(Serial.available() > 0){
     uint8_t time = millis() >> 2;
     for (uint8_t x = 0; x < ledPanelWidth; x++)
     {
@@ -92,8 +92,8 @@ void loop()
       }
     }
     ledStrip.write(colors, ledCount, brightness);
-  }
-  else {
+  //}
+  /*else {
     uint8_t time = millis() >> 2;
     for (uint8_t x = 0; x < 2; x++)
     {
@@ -107,5 +107,5 @@ void loop()
       }
     }
     ledStrip.write(colors, ledCount, brightness);
-  }
+  }*/
 }
