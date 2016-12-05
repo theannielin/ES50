@@ -1,25 +1,44 @@
 from Tkinter import *
 
+#Create & Configure root 
 root = Tk()
-frame=Frame(root)
 Grid.rowconfigure(root, 0, weight=1)
 Grid.columnconfigure(root, 0, weight=1)
+
+#Create & Configure frame 
+frame=Frame(root)
 frame.grid(row=0, column=0, sticky=N+S+E+W)
-grid=Frame(frame)
-grid.grid(sticky=N+S+E+W, column=0, row=7, columnspan=2)
-Grid.rowconfigure(frame, 7, weight=1)
-Grid.columnconfigure(frame, 0, weight=1)
 
-#example values
-for x in range(10):
-    for y in range(5):
-        btn = Button(frame)
-        btn.grid(column=x, row=y, sticky=N+S+E+W)
+matrix = [[0 for i in range(13)] for j in range(13)]
 
-for x in range(10):
-  Grid.columnconfigure(frame, x, weight=1)
+class MyButton:
+    def __init__(self, x, y):
+        self.btn =  Button(frame, text = "X", command=lambda row=x, column=y: self.toggle_text(row, column))
 
-for y in range(5):
-  Grid.rowconfigure(frame, y, weight=1)
+    def toggle_text(self, row, column):
+	    """toggle button text between X and O"""
+	    if self.btn["text"] == "X":
+	        self.btn["text"] = "O"
+	        matrix[row][column] = 1
+	    else:
+	        self.btn["text"] = "X"
+	        matrix[row][column] = 0
+
+class OKButton:
+    def __init__(self):
+        self.btn = Button(frame, text = "SEND",command=self.printMatrix)
+
+    def printMatrix(self):
+    	print matrix
+
+#Create a 13x13 (rows x columns) grid of buttons inside the frame
+for row_index in range(13):
+    Grid.rowconfigure(frame, row_index, weight=1)
+    for col_index in range(13):
+        myB = MyButton(row_index, col_index)
+        myB.btn.grid(row=row_index, column=col_index, sticky=N+S+E+W)
+
+okButt = OKButton()
+okButt.btn.grid(row=6, column=14, sticky=N+S+E+W)
 
 root.mainloop()
