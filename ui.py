@@ -1,4 +1,5 @@
 from Tkinter import *
+#import serial
 
 #Create & Configure root 
 root = Tk()
@@ -30,7 +31,9 @@ class OKButton:
 
     def printMatrix(self):
     	# TODO: SEND STUFF!!!
-    	print matrix
+        print matrix
+    	#ser = serial.Serial(1411,9600)
+        #ser.write(matrix)
 
 #Create a 13x13 (rows x columns) grid of buttons inside the frame
 for row_index in range(13):

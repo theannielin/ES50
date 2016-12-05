@@ -78,7 +78,7 @@ rgb_color & color_at(uint8_t x, uint8_t y)
 
 void loop()
 {
-  if(Serial.available() > 0){
+  //if(Serial.available() > 0){
     uint8_t time = millis() >> 2;
     for (uint8_t x = 0; x < ledPanelWidth; x++)
     {
@@ -92,8 +92,8 @@ void loop()
       }
     }
     ledStrip.write(colors, ledCount, brightness);
-  }
-  else {
+  //}
+  /*else {
     uint8_t time = millis() >> 2;
     for (uint8_t x = 0; x < 2; x++)
     {
@@ -107,5 +107,5 @@ void loop()
       }
     }
     ledStrip.write(colors, ledCount, brightness);
-  }
+  }*/
 }
