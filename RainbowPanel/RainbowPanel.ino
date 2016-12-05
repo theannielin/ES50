@@ -22,8 +22,8 @@ const uint8_t clockPin = 12;
 APA102<dataPin, clockPin> ledStrip;
 
 // Set the size of the LED panel.
-const uint8_t ledPanelWidth = 32;
-const uint8_t ledPanelHeight = 32;
+const uint8_t ledPanelWidth = 13;
+const uint8_t ledPanelHeight = 13;
 const uint16_t ledCount = ledPanelWidth * ledPanelHeight;
 
 // Create a buffer for holding the colors (3 bytes per color).
