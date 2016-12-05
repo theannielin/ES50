@@ -78,23 +78,12 @@ rgb_color & color_at(uint8_t x, uint8_t y)
 
 void loop()
 {
+  // If there's a new connection, flash all green
   if(Serial.available()) {
     
     uint8_t time = millis() >> 2;
-    for (uint8_t x = 0; x < ledPanelWidth; x++)
-      {
-        for (uint8_t y = 0; y < ledPanelHeight; y++)
-        {
-          // The x * 20 and y * 10 terms determine the general
-          // direction and width of the rainbow, and the x * y term
-          // makes it curve a bit.
-          //uint8_t p = time - x * 20 - y * 10 - x * y;
-          //color_at(x, y) = hsvToRgb((uint32_t)p * 359 / 256, 255, 255);
-          color_at(x, y) = (rgb_color){0,255,0};
-        }
-      }
-    ledStrip.write(colors, ledCount, brightness);
 
+    // Return rainbow if receive desired string
     byte c = Serial.read();
     if (c == '7') {
       
@@ -116,17 +105,27 @@ void loop()
            break;
       }
     }
+    else {
+ for (uint8_t x = 0; x < ledPanelWidth; x++)
+      {
+        for (uint8_t y = 0; y < ledPanelHeight; y++)
+        {
+          color_at(x, y) = (rgb_color){0,255,0};
+        }
+      }
+      while (true) {
+        ledStrip.write(colors, ledCount, brightness);
+        if (Serial.available())
+           break;
+      }
+
+    }
   } else {
       uint8_t time = millis() >> 2;
       for (uint8_t x = 0; x < ledPanelWidth; x++)
         {
           for (uint8_t y = 0; y < ledPanelHeight; y++)
           {
-            // The x * 20 and y * 10 terms determine the general
-            // direction and width of the rainbow, and the x * y term
-            // makes it curve a bit.
-            //uint8_t p = time - x * 20 - y * 10 - x * y;
-            //color_at(x, y) = hsvToRgb((uint32_t)p * 359 / 256, 255, 255);
             color_at(x, y) = (rgb_color){255,0,0};
           }
         }

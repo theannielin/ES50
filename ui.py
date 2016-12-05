@@ -1,5 +1,9 @@
 from Tkinter import *
-#import serial
+import serial
+
+serial_speed = 115200
+serial_port = '/dev/cu.usbmodem1411'
+ser = serial.Serial(serial_port, serial_speed, timeout=1)
 
 #Create & Configure root 
 root = Tk()
@@ -32,8 +36,9 @@ class OKButton:
     def printMatrix(self):
     	# TODO: SEND STUFF!!!
         print matrix
-    	#ser = serial.Serial(1411,9600)
-        #ser.write(matrix)
+    	print ser.write('7')
+        if ser.read() == 1:
+            print "got number back"
 
 #Create a 13x13 (rows x columns) grid of buttons inside the frame
 for row_index in range(13):
