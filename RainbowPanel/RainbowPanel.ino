@@ -67,50 +67,52 @@ void setup()
  * efficiency, this function does not check the values of x and
  * y, so x must be less than ledPanelWidth and y must be less
  * than ledPanelHeight. */
-rgb_color & color_at(uint8_t x, uint8_t y)
-{
-  /* The LEDs in the panel are arranged in a serpentine layout,
-   * so if we are in an even-numbered column then flip the x
-   * coordinate. */
-  if (!(y & 1)) { x = ledPanelWidth - 1 - x; }
-  return colors[(ledPanelWidth * y) + x];
-}
+//rgb_color & color_at(uint8_t x, uint8_t y)
+//{
+//  /* The LEDs in the panel are arranged in a serpentine layout,
+//   * so if we are in an even-numbered column then flip the x
+//   * coordinate. */
+//  if (!(y & 1)) { x = ledPanelWidth - 1 - x; }
+//  return colors[(ledPanelWidth * y) + x];
+//}
 
 void loop()
 {
+  uint8_t time = millis() >> 2;
   // If there's a new connection, flash all green
   if(Serial.available()) {
-    
-    uint8_t time = millis() >> 2;
-
-    // Return rainbow if receive desired string
-    byte c = Serial.read();
-    if (c == '7') {
-      
+    // Return rainbow if string is not empty
+    String c = Serial.readString();
+    if (c.length() != 0) {
       for (uint8_t x = 0; x < ledPanelWidth; x++)
       {
         for (uint8_t y = 0; y < ledPanelHeight; y++)
         {
-          // The x * 20 and y * 10 terms determine the general
-          // direction and width of the rainbow, and the x * y term
-          // makes it curve a bit.
-          uint8_t p = time - x * 20 - y * 10 - x * y;
-          
-          color_at(x, y) = hsvToRgb((uint32_t)p * 359 / 256, 255, 255);
+          //Serial.print(c.length());
+          //Serial.print(c[ledPanelWidth*x+y]);
+          if (c[ledPanelWidth*x+y]=='1') {
+            colors[x*13+y] = (rgb_color){0,255,0};
+          }
+          else {
+            colors[x*13+y] = (rgb_color){0,0,255};
+          }
         }
+        // colors[1*13+0] = (rgb_color){255,0,0};
       }
       while (true) {
         ledStrip.write(colors, ledCount, brightness);
+        //Serial.println(c[ledPanelWidth*1+2]);
         if (Serial.available())
            break;
       }
     }
     else {
- for (uint8_t x = 0; x < ledPanelWidth; x++)
+      // if the string is empty, then flash green
+      for (uint8_t x = 0; x < ledPanelWidth; x++)
       {
         for (uint8_t y = 0; y < ledPanelHeight; y++)
         {
-          color_at(x, y) = (rgb_color){0,255,0};
+          colors[x*13+y] = (rgb_color){0,255,0};
         }
       }
       while (true) {
@@ -118,17 +120,16 @@ void loop()
         if (Serial.available())
            break;
       }
-
     }
   } else {
-      uint8_t time = millis() >> 2;
+      // No connection, first time, flash red
       for (uint8_t x = 0; x < ledPanelWidth; x++)
         {
           for (uint8_t y = 0; y < ledPanelHeight; y++)
           {
-            color_at(x, y) = (rgb_color){255,0,0};
+            colors[x*13+y] = (rgb_color){255,0,0};
           }
         }
       ledStrip.write(colors, ledCount, brightness);
-    }
+   }
 }

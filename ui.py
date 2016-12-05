@@ -3,7 +3,6 @@ import serial
 
 serial_speed = 115200
 serial_port = '/dev/cu.usbmodem1411'
-ser = serial.Serial(serial_port, serial_speed, timeout=1)
 
 #Create & Configure root 
 root = Tk()
@@ -36,9 +35,21 @@ class OKButton:
     def printMatrix(self):
     	# TODO: SEND STUFF!!!
         print matrix
-    	print ser.write('7')
-        if ser.read() == 1:
-            print "got number back"
+        ser = serial.Serial(serial_port, serial_speed, timeout=1)
+        string = ''
+        new_strings = []
+        for i in range(13):
+            for j in range(13):
+                string += str(matrix[i][j])
+        for i in range(13):
+            if i%2 == 0:
+                new_strings.append(string[13*i: 13*i+13])
+            else:
+                new_strings.append(string[13*i+12:13*i-1:-1])
+        string = "".join(new_strings)
+        ser.write(string)
+        print string
+        ser.close()
 
 #Create a 13x13 (rows x columns) grid of buttons inside the frame
 for row_index in range(13):
