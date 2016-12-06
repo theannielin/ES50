@@ -4,12 +4,12 @@ import serial
 serial_speed = 115200
 serial_port = '/dev/cu.usbmodem1411'
 
-#Create & Configure root 
+#Create & Configure root
 root = Tk()
 Grid.rowconfigure(root, 0, weight=1)
 Grid.columnconfigure(root, 0, weight=1)
 
-#Create & Configure frame 
+#Create & Configure frame
 frame=Frame(root)
 frame.grid(row=0, column=0, sticky=N+S+E+W)
 
@@ -17,20 +17,39 @@ matrix = [[0 for i in range(13)] for j in range(13)]
 
 class MyButton:
     def __init__(self, x, y):
-        self.btn =  Button(frame, text = "R", command=lambda row=x, column=y: self.toggle_text(row, column))
+        self.btn =  Button(frame, text = "X", command=lambda row=x, column=y: self.toggle_text(row, column))
 
     def toggle_text(self, row, column):
         """toggle button text between R and G and B"""
-        if self.btn["text"] == "R":
+        if self.btn["text"] == "X":
+            self.btn["text"] = "R"
+            self.btn["highlightbackground"] ="red"
+            matrix[row][column] = 3
+        elif self.btn["text"] == "R":
+            self.btn["text"] = "O"
+            self.btn["highlightbackground"] ="orange"
+            matrix[row][column] = 6
+        elif self.btn["text"] == "O":
+            self.btn["text"] = "Y"
+            self.btn["highlightbackground"] ="yellow"
+            matrix[row][column] = 4
+        elif self.btn["text"] == "Y":
             self.btn["text"] = "G"
+            self.btn["highlightbackground"] ="green"
             matrix[row][column] = 1
         elif self.btn["text"] == "G":
             self.btn["text"] = "B"
+            self.btn["highlightbackground"] ="blue"
             matrix[row][column] = 2
         elif self.btn["text"] == "B":
-            self.btn["text"] = "R"
+            self.btn["text"] = "P"
+            self.btn["highlightbackground"] ="purple"
+            matrix[row][column] = 5
+        elif self.btn["text"] == "P":
+            self.btn["text"] = "X"
+            self.btn["highlightbackground"] ="white"
             matrix[row][column] = 0
- 
+
 class OKButton:
     def __init__(self):
         self.btn = Button(frame, text = "SEND",command=self.printMatrix)
