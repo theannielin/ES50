@@ -90,10 +90,13 @@ void loop()
         {
           //Serial.print(c.length());
           //Serial.print(c[ledPanelWidth*x+y]);
-          if (c[ledPanelWidth*x+y]=='1') {
+          if (c[ledPanelWidth*x+y]=='0') {
+            colors[x*13+y] = (rgb_color){255,0,0};
+          }
+          else if (c[ledPanelWidth*x+y]=='1') {
             colors[x*13+y] = (rgb_color){0,255,0};
           }
-          else {
+          else if (c[ledPanelWidth*x+y]=='2') {
             colors[x*13+y] = (rgb_color){0,0,255};
           }
         }

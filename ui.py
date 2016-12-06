@@ -17,17 +17,20 @@ matrix = [[0 for i in range(13)] for j in range(13)]
 
 class MyButton:
     def __init__(self, x, y):
-        self.btn =  Button(frame, text = "X", command=lambda row=x, column=y: self.toggle_text(row, column))
+        self.btn =  Button(frame, text = "R", command=lambda row=x, column=y: self.toggle_text(row, column))
 
     def toggle_text(self, row, column):
-	    """toggle button text between X and O"""
-	    if self.btn["text"] == "X":
-	        self.btn["text"] = "O"
-	        matrix[row][column] = 1
-	    else:
-	        self.btn["text"] = "X"
-	        matrix[row][column] = 0
-
+        """toggle button text between R and G and B"""
+        if self.btn["text"] == "R":
+            self.btn["text"] = "G"
+            matrix[row][column] = 1
+        elif self.btn["text"] == "G":
+            self.btn["text"] = "B"
+            matrix[row][column] = 2
+        elif self.btn["text"] == "B":
+            self.btn["text"] = "R"
+            matrix[row][column] = 0
+ 
 class OKButton:
     def __init__(self):
         self.btn = Button(frame, text = "SEND",command=self.printMatrix)
