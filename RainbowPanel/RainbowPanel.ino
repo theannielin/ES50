@@ -91,13 +91,25 @@ void loop()
           //Serial.print(c.length());
           //Serial.print(c[ledPanelWidth*x+y]);
           if (c[ledPanelWidth*x+y]=='0') {
-            colors[x*13+y] = (rgb_color){255,0,0};
+            colors[x*13+y] = (rgb_color){0,0,0}; // off
           }
           else if (c[ledPanelWidth*x+y]=='1') {
-            colors[x*13+y] = (rgb_color){0,255,0};
+            colors[x*13+y] = (rgb_color){0,255,0}; // green
           }
           else if (c[ledPanelWidth*x+y]=='2') {
-            colors[x*13+y] = (rgb_color){0,0,255};
+            colors[x*13+y] = (rgb_color){0,0,255}; // blue
+          }
+          else if (c[ledPanelWidth*x+y]=='3') {
+            colors[x*13+y] = (rgb_color){255,0,0}; // red
+          }
+          else if (c[ledPanelWidth*x+y]=='4') {
+            colors[x*13+y] = (rgb_color){255,255,0}; // yellow
+          }
+          else if (c[ledPanelWidth*x+y]=='5') {
+            colors[x*13+y] = (rgb_color){148,0,211}; // purple
+          }
+          else if (c[ledPanelWidth*x+y]=='6') {
+            colors[x*13+y] = (rgb_color){255,140,0}; // orange
           }
         }
         // colors[1*13+0] = (rgb_color){255,0,0};
