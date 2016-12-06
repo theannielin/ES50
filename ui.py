@@ -71,6 +71,31 @@ def sendInfo():
     print string
     ser.close()
 
+def resetButtons():
+    for i in range(13):
+        for j in range(13):
+            if matrix[i][j] == 0:
+                buttons[i*13+j].btn["text"] = "X"
+                buttons[i*13+j].btn["highlightbackground"] ="white"
+            elif matrix[i][j] == 1:
+                buttons[i*13+j].btn["text"] = "G"
+                buttons[i*13+j].btn["highlightbackground"] ="green"
+            elif matrix[i][j] == 2:
+                buttons[i*13+j].btn["text"] = "B"
+                buttons[i*13+j].btn["highlightbackground"] ="blue"
+            elif matrix[i][j] == 3:
+                buttons[i*13+j].btn["text"] = "R"
+                buttons[i*13+j].btn["highlightbackground"] ="red"
+            elif matrix[i][j] == 4:
+                buttons[i*13+j].btn["text"] = "Y"
+                buttons[i*13+j].btn["highlightbackground"] ="yellow"
+            elif matrix[i][j] == 5:
+                buttons[i*13+j].btn["text"] = "P"
+                buttons[i*13+j].btn["highlightbackground"] ="purple"
+            elif matrix[i][j] == 6:
+                buttons[i*13+j].btn["text"] = "O"
+                buttons[i*13+j].btn["highlightbackground"] ="orange"
+
 class sendButton:
     def __init__(self):
         self.btn = Button(frame, text = "SEND",command=sendInfo)
@@ -95,7 +120,12 @@ class rainbowButton:
 
     def sendRainbow(self):
         # reset buttons and matrix
-        matrix = []
+        counter = 0
+        for i in range(13):
+            for j in range(13):
+                matrix[i][j] = (counter % 6) + 1
+                counter = counter + 1
+        resetButtons()
         sendInfo()
 
 class surpriseButton:
