@@ -59,7 +59,6 @@ class MyButton:
 
 def sendInfo():
     print matrix
-    ser = serial.Serial(serial_port, serial_speed, timeout=1)
     string = ''
     new_strings = []
     for i in range(13):
@@ -71,9 +70,13 @@ def sendInfo():
         else:
             new_strings.append(string[13*i+12:13*i-1:-1])
     string = "".join(new_strings)
-    ser.write(string)
     print string
-    ser.close()
+    try:
+        ser = serial.Serial(serial_port, serial_speed, timeout=1)
+        ser.write(string)
+        ser.close()
+    except: 
+        print "CRY, just paste the string to the app"
 
 def resetButtons():
     for i in range(13):
