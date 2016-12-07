@@ -66,21 +66,29 @@ def sendInfo():
         for j in range(13):
             string += str(matrix[i][j])
     for i in range(13):
-        if i%2 == 0:
-            new_strings.append(string[13*i: 13*i+13])
-        else:
+        if i == 0:
+            new_strings.append(string[13*i+12:13*i:-1])
+            new_strings.append(string[0])
+        elif i%2 == 0:
             new_strings.append(string[13*i+12:13*i-1:-1])
+        else:
+            new_strings.append(string[13*i:13*i+13])
     string = "".join(new_strings)
-    if (flashButt.btn["text"]=="Flash ON"):
-        string = string+"1"
-    else:
-        string = string+"0"
     print string
+    print '0' + string[0: 50]
+    print '1' + string[50: 100]
+    print '2' + string[100: 150]
+    if (flashButt.btn["text"]=="Flash ON"):
+        print '3' + string[150:] + '1'
+    else:
+        print '3' + string[150:] + '0'
+
     try:
         print "Trying via USB"
         ser = serial.Serial(serial_port, serial_speed, timeout=1)
         ser.write(string)
         ser.close()
+        print "Done USB"
     except: 
         print "CRY, just paste the string to the app"
         pyperclip.copy(string)

@@ -164,6 +164,12 @@ rgb_color not_colors[ledCount];
 // Set the brightness to use (the maximum is 31).
 const uint8_t brightness = 1;
 
+String str0;
+String str1;
+String str2;
+String str3;
+String finalStr;
+
 /* Converts a color from HSV to RGB.
  * h is hue, as a number between 0 and 360.
  * s is the saturation, as a number between 0 and 255.
@@ -260,38 +266,47 @@ void loop()
       c = ble.readString();
     }
     if (c.length() != 0) {
+      if (c[0] == '0') {
+        str0 = c.substring(1,51);
+      } else if (c[0] == '1') {
+        str1 = c.substring(1,51);
+      } else if (c[0] == '2') {
+        str2 = c.substring(1,51);
+      } else if (c[0] == '3') {
+        str3 = c.substring(1,21);
+      }
+      finalStr = str0 + str1 + str2 + str3;
       for (uint8_t x = 0; x < ledPanelWidth; x++)
       {
         for (uint8_t y = 0; y < ledPanelHeight; y++)
         {
-          //Serial.print(c.length());
-          //Serial.print(c[ledPanelWidth*x+y]);
-          if (c[ledPanelWidth*x+y]=='0') {
+          if (finalStr[ledPanelWidth*x+y]=='0') {
             colors[x*13+y] = (rgb_color){0,0,0}; // off
           }
-          else if (c[ledPanelWidth*x+y]=='1') {
+          else if (finalStr[ledPanelWidth*x+y]=='1') {
             colors[x*13+y] = (rgb_color){255,0,0}; // red
           }
-          else if (c[ledPanelWidth*x+y]=='2') {
+          else if (finalStr[ledPanelWidth*x+y]=='2') {
             colors[x*13+y] = (rgb_color){153,76,0}; // orange
           }
-          else if (c[ledPanelWidth*x+y]=='3') {
+          else if (finalStr[ledPanelWidth*x+y]=='3') {
             colors[x*13+y] = (rgb_color){255,255,0}; // yellow
           }
-          else if (c[ledPanelWidth*x+y]=='4') {
+          else if (finalStr[ledPanelWidth*x+y]=='4') {
             colors[x*13+y] = (rgb_color){0,255,0}; // green
           }
-          else if (c[ledPanelWidth*x+y]=='5') {
+          else if (finalStr[ledPanelWidth*x+y]=='5') {
             colors[x*13+y] = (rgb_color){0,0,255}; // blue
           }
-          else if (c[ledPanelWidth*x+y]=='6') {
+          else if (finalStr[ledPanelWidth*x+y]=='6') {
             colors[x*13+y] = (rgb_color){148,0,211}; // purple
           }
+          
           not_colors[x*13+y] = (rgb_color){0,0,0}; 
         }
       }
       while (true) {
-        if (c[c.length()-1]=='1') {
+        if (str3[19] == '1') {
           ledStrip.write(colors, ledCount, brightness);
           Serial.println(c[ledCount]);
           delay(500);
