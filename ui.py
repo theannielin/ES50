@@ -1,18 +1,22 @@
+# User interface for ES50 Fall 2016 Team 10: Customizable LED Jacket
+# Authors: Hailey James, Melissa ChaeHyun Lee, Annie Lin, Stephen Slater
+
 from Tkinter import *
 import serial
 
 serial_speed = 115200
 serial_port = '/dev/cu.usbmodem1411'
 
-#Create & Configure root
+# Create & configure root
 root = Tk()
 Grid.rowconfigure(root, 0, weight=1)
 Grid.columnconfigure(root, 0, weight=1)
 
-#Create & Configure frame
+# Create & configure frame
 frame=Frame(root)
 frame.grid(row=0, column=0, sticky=N+S+E+W)
 
+# Global variables
 matrix = [[0 for i in range(13)] for j in range(13)]
 buttons = []
 
@@ -105,7 +109,7 @@ class clearButton:
         self.btn = Button(frame, text = "CLEAR",command=self.clear)
 
     def clear(self):
-        # reset matrix and buttons
+        # Reset matrix and buttons
         for i in range(13):
             for j in range(13):
                 matrix[i][j] = 0
@@ -119,7 +123,7 @@ class rainbowButton:
         self.btn = Button(frame, text = "RAINBOW",command=self.sendRainbow)
 
     def sendRainbow(self):
-        # reset buttons and matrix
+        # Reset buttons and matrix
         counter = 0
         for i in range(13):
             for j in range(13):
@@ -135,7 +139,7 @@ class surpriseButton:
     def sendSurprise(self):
         # ES50 Design
         design = [[3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3], [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3], [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3], [2, 2, 2, 3, 2, 2, 3, 2, 2, 3, 2, 2, 2], [2, 3, 3, 3, 2, 3, 3, 2, 3, 3, 2, 3, 2], [2, 2, 3, 3, 2, 2, 3, 2, 3, 3, 2, 3, 2], [2, 3, 3, 3, 3, 2, 3, 3, 2, 3, 2, 3, 2], [2, 3, 3, 3, 3, 2, 3, 3, 2, 3, 2, 3, 2], [2, 2, 2, 3, 2, 2, 3, 2, 2, 3, 2, 2, 2], [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3], [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3], [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3], [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]]
-        # Cannot reset matrix, have to do it like this
+        # Note: Cannot simply reset matrix, has to be done like this
         for i in range(13):
             for j in range(13):
                 matrix[i][j] = design[i][j]
