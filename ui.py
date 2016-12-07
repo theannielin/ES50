@@ -3,6 +3,7 @@
 
 from Tkinter import *
 import serial
+import pyperclip
 
 serial_speed = 115200
 serial_port = '/dev/cu.usbmodem1411'
@@ -76,8 +77,8 @@ def sendInfo():
         ser.write(string)
         ser.close()
     except: 
-        # if we can find a way to directly just copy it into our clipboard, then that'd be nice i guess
         print "CRY, just paste the string to the app"
+        pyperclip.copy(string)
 
 def resetButtons():
     for i in range(13):
