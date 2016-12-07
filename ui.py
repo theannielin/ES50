@@ -31,27 +31,27 @@ class MyButton:
         if self.btn["text"] == "X":
             self.btn["text"] = "R"
             self.btn["highlightbackground"] ="red"
-            matrix[row][column] = 3
+            matrix[row][column] = 1
         elif self.btn["text"] == "R":
             self.btn["text"] = "O"
             self.btn["highlightbackground"] ="orange"
-            matrix[row][column] = 6
+            matrix[row][column] = 2
         elif self.btn["text"] == "O":
             self.btn["text"] = "Y"
             self.btn["highlightbackground"] ="yellow"
-            matrix[row][column] = 4
+            matrix[row][column] = 3
         elif self.btn["text"] == "Y":
             self.btn["text"] = "G"
             self.btn["highlightbackground"] ="green"
-            matrix[row][column] = 1
+            matrix[row][column] = 4
         elif self.btn["text"] == "G":
             self.btn["text"] = "B"
             self.btn["highlightbackground"] ="blue"
-            matrix[row][column] = 2
+            matrix[row][column] = 5
         elif self.btn["text"] == "B":
             self.btn["text"] = "P"
             self.btn["highlightbackground"] ="purple"
-            matrix[row][column] = 5
+            matrix[row][column] = 6
         elif self.btn["text"] == "P":
             self.btn["text"] = "X"
             self.btn["highlightbackground"] ="white"
@@ -76,6 +76,7 @@ def sendInfo():
         ser.write(string)
         ser.close()
     except: 
+        # if we can find a way to directly just copy it into our clipboard, then that'd be nice i guess
         print "CRY, just paste the string to the app"
 
 def resetButtons():
@@ -85,23 +86,23 @@ def resetButtons():
                 buttons[i*13+j].btn["text"] = "X"
                 buttons[i*13+j].btn["highlightbackground"] ="white"
             elif matrix[i][j] == 1:
-                buttons[i*13+j].btn["text"] = "G"
-                buttons[i*13+j].btn["highlightbackground"] ="green"
-            elif matrix[i][j] == 2:
-                buttons[i*13+j].btn["text"] = "B"
-                buttons[i*13+j].btn["highlightbackground"] ="blue"
-            elif matrix[i][j] == 3:
                 buttons[i*13+j].btn["text"] = "R"
                 buttons[i*13+j].btn["highlightbackground"] ="red"
-            elif matrix[i][j] == 4:
-                buttons[i*13+j].btn["text"] = "Y"
-                buttons[i*13+j].btn["highlightbackground"] ="yellow"
-            elif matrix[i][j] == 5:
-                buttons[i*13+j].btn["text"] = "P"
-                buttons[i*13+j].btn["highlightbackground"] ="purple"
-            elif matrix[i][j] == 6:
+            elif matrix[i][j] == 2:
                 buttons[i*13+j].btn["text"] = "O"
                 buttons[i*13+j].btn["highlightbackground"] ="orange"
+            elif matrix[i][j] == 3:
+                buttons[i*13+j].btn["text"] = "Y"
+                buttons[i*13+j].btn["highlightbackground"] ="yellow"
+            elif matrix[i][j] == 4:
+                buttons[i*13+j].btn["text"] = "G"
+                buttons[i*13+j].btn["highlightbackground"] ="green"
+            elif matrix[i][j] == 5:
+                buttons[i*13+j].btn["text"] = "B"
+                buttons[i*13+j].btn["highlightbackground"] ="blue"
+            elif matrix[i][j] == 6:
+                buttons[i*13+j].btn["text"] = "P"
+                buttons[i*13+j].btn["highlightbackground"] ="purple"
 
 class sendButton:
     def __init__(self):
@@ -141,7 +142,35 @@ class surpriseButton:
 
     def sendSurprise(self):
         # ES50 Design
-        design = [[3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3], [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3], [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3], [2, 2, 2, 3, 2, 2, 3, 2, 2, 3, 2, 2, 2], [2, 3, 3, 3, 2, 3, 3, 2, 3, 3, 2, 3, 2], [2, 2, 3, 3, 2, 2, 3, 2, 3, 3, 2, 3, 2], [2, 3, 3, 3, 3, 2, 3, 3, 2, 3, 2, 3, 2], [2, 3, 3, 3, 3, 2, 3, 3, 2, 3, 2, 3, 2], [2, 2, 2, 3, 2, 2, 3, 2, 2, 3, 2, 2, 2], [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3], [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3], [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3], [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]]
+        design = [[5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5], [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5], [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5], [1, 1, 1, 5, 1, 1, 5, 1, 1, 5, 1, 1, 1], [1, 5, 5, 5, 1, 5, 5, 1, 5, 5, 1, 5, 1], [1, 1, 5, 5, 1, 1, 5, 1, 5, 5, 1, 5, 1], [1, 5, 5, 5, 5, 1, 5, 5, 1, 5, 1, 5, 1], [1, 5, 5, 5, 5, 1, 5, 5, 1, 5, 1, 5, 1], [1, 1, 1, 5, 1, 1, 5, 1, 1, 5, 1, 1, 1], [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5], [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5], [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5], [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5]]
+        # Note: Cannot simply reset matrix, has to be done like this
+        for i in range(13):
+            for j in range(13):
+                matrix[i][j] = design[i][j]
+        resetButtons()
+        sendInfo()
+
+class heartButton:
+    def __init__(self):
+        self.btn = Button(frame, text = "HEART",command=self.sendHeart)
+
+    def sendHeart(self):
+        # ES50 Design
+        design = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0], [0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0], [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0], [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0], [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0], [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0], [0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0], [0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0], [0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
+        # Note: Cannot simply reset matrix, has to be done like this
+        for i in range(13):
+            for j in range(13):
+                matrix[i][j] = design[i][j]
+        resetButtons()
+        sendInfo()
+
+class treeButton:
+    def __init__(self):
+        self.btn = Button(frame, text = "TREE",command=self.sendTree)
+
+    def sendTree(self):
+        # ES50 Design
+        design = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 4, 4, 4, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 4, 4, 4, 0, 0, 0, 0, 0], [0, 0, 0, 0, 4, 4, 1, 4, 4, 0, 0, 0, 0], [0, 0, 0, 0, 4, 4, 4, 4, 4, 0, 0, 0, 0], [0, 0, 0, 4, 4, 4, 4, 3, 4, 4, 0, 0, 0], [0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 0, 0, 0], [0, 0, 0, 4, 1, 4, 4, 4, 4, 4, 0, 0, 0], [0, 0, 4, 4, 4, 4, 4, 4, 1, 4, 4, 0, 0], [0, 0, 4, 4, 4, 4, 4, 4, 4, 4, 4, 0, 0], [0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0]]
         # Note: Cannot simply reset matrix, has to be done like this
         for i in range(13):
             for j in range(13):
@@ -164,8 +193,14 @@ clearButt.btn.grid(row=5, column=14, sticky=N+S+E+W)
 
 rainbowButt = rainbowButton()
 rainbowButt.btn.grid(row=7, column=14, sticky=N+S+E+W)
+
 surpriseButt = surpriseButton()
 surpriseButt.btn.grid(row=8, column=14, sticky=N+S+E+W)
 
+heartButt = heartButton()
+heartButt.btn.grid(row=9, column=14, sticky=N+S+E+W)
+
+treeButt = treeButton()
+treeButt.btn.grid(row=10, column=14, sticky=N+S+E+W)
 
 root.mainloop()
