@@ -158,6 +158,9 @@ const uint16_t ledCount = ledPanelWidth * ledPanelHeight;
 // Create a buffer for holding the colors (3 bytes per color).
 rgb_color colors[ledCount];
 
+// Create a buffer for holding the colors (3 bytes per color).
+rgb_color not_colors[ledCount];
+
 // Set the brightness to use (the maximum is 31).
 const uint8_t brightness = 1;
 
@@ -284,11 +287,20 @@ void loop()
           else if (c[ledPanelWidth*x+y]=='6') {
             colors[x*13+y] = (rgb_color){148,0,211}; // purple
           }
+          not_colors[x*13+y] = (rgb_color){0,0,0}; 
         }
       }
       while (true) {
-        ledStrip.write(colors, ledCount, brightness);
-        //Serial.println(c[ledPanelWidth*1+2]);
+        if (c[c.length()-1]=='1') {
+          ledStrip.write(colors, ledCount, brightness);
+          Serial.println(c[ledCount]);
+          delay(500);
+          ledStrip.write(not_colors, ledCount, brightness);
+          delay(500);
+        }
+        else {
+          ledStrip.write(colors, ledCount, brightness);
+        }
         if (Serial.available() || ble.available())
            break;
       }

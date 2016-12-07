@@ -71,8 +71,13 @@ def sendInfo():
         else:
             new_strings.append(string[13*i+12:13*i-1:-1])
     string = "".join(new_strings)
+    if (flashButt.btn["text"]=="Flash ON"):
+        string = string+"1"
+    else:
+        string = string+"0"
     print string
     try:
+        print "Trying via USB"
         ser = serial.Serial(serial_port, serial_speed, timeout=1)
         ser.write(string)
         ser.close()
@@ -108,6 +113,17 @@ def resetButtons():
 class sendButton:
     def __init__(self):
         self.btn = Button(frame, text = "SEND",command=sendInfo)
+
+class flashButton:
+    def __init__(self):
+        self.btn =  Button(frame, text = "Flash OFF", command=self.toggle_flash)
+
+    def toggle_flash(self):
+        """toggle button text between ON and OFF"""
+        if self.btn["text"] == "Flash OFF":
+            self.btn["text"] = "Flash ON"
+        elif self.btn["text"] == "Flash ON":
+            self.btn["text"] = "Flash OFF"
 
 class clearButton:
     def __init__(self):
@@ -187,6 +203,8 @@ for row_index in range(13):
         myB.btn.grid(row=row_index, column=col_index, sticky=N+S+E+W)
         buttons.append(myB)
 
+flashButt = flashButton()
+flashButt.btn.grid(row=3, column=14, sticky=N+S+E+W)
 sendButt = sendButton()
 sendButt.btn.grid(row=4, column=14, sticky=N+S+E+W)
 clearButt = clearButton()
