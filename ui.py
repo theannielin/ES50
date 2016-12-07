@@ -133,8 +133,13 @@ class surpriseButton:
         self.btn = Button(frame, text = "SURPRISE",command=self.sendSurprise)
 
     def sendSurprise(self):
-        # reset buttons and matrix
-        matrix = []
+        # ES50 Design
+        design = [[3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3], [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3], [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3], [2, 2, 2, 3, 2, 2, 3, 2, 2, 3, 2, 2, 2], [2, 3, 3, 3, 2, 3, 3, 2, 3, 3, 2, 3, 2], [2, 2, 3, 3, 2, 2, 3, 2, 3, 3, 2, 3, 2], [2, 3, 3, 3, 3, 2, 3, 3, 2, 3, 2, 3, 2], [2, 3, 3, 3, 3, 2, 3, 3, 2, 3, 2, 3, 2], [2, 2, 2, 3, 2, 2, 3, 2, 2, 3, 2, 2, 2], [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3], [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3], [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3], [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]]
+        # Cannot reset matrix, have to do it like this
+        for i in range(13):
+            for j in range(13):
+                matrix[i][j] = design[i][j]
+        resetButtons()
         sendInfo()
 
 #Create a 13x13 (rows x columns) grid of buttons inside the frame
