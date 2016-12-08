@@ -75,14 +75,15 @@ def sendInfo():
             new_strings.append(string[13*i:13*i+13])
     string = "".join(new_strings)
     print string
-    print '0' + string[0: 50]
-    print '1' + string[50: 100]
-    print '2' + string[100: 150]
+    new_string = ''
+    new_string = new_string + '0' + string[0: 50] + '\n'
+    new_string = new_string + '1' + string[50: 100] + '\n'
+    new_string = new_string + '2' + string[100: 150] + '\n'
     if (flashButt.btn["text"]=="Flash ON"):
-        print '3' + string[150:] + '1'
+        new_string = new_string + '3' + string[150:] + '1'
     else:
-        print '3' + string[150:] + '0'
-
+        new_string = new_string + '3' + string[150:] + '0'
+    print new_string
     try:
         print "Trying via USB"
         ser = serial.Serial(serial_port, serial_speed, timeout=1)
@@ -91,7 +92,7 @@ def sendInfo():
         print "Done USB"
     except: 
         print "CRY, just paste the string to the app"
-        pyperclip.copy(string)
+        pyperclip.copy(new_string)
 
 def resetButtons():
     for i in range(13):
