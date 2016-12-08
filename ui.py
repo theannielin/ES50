@@ -84,15 +84,15 @@ def sendInfo():
     else:
         new_string = new_string + '3' + string[150:] + '0'
     print new_string
-    try:
-        print "Trying via USB"
-        ser = serial.Serial(serial_port, serial_speed, timeout=1)
-        ser.write(string)
-        ser.close()
-        print "Done USB"
-    except: 
-        print "CRY, just paste the string to the app"
-        pyperclip.copy(new_string)
+    # try:
+    #     print "Trying via USB"
+    #     ser = serial.Serial(serial_port, serial_speed, timeout=1)
+    #     ser.write(string)
+    #     ser.close()
+    #     print "Done USB"
+    # except: 
+    print "CRY, just paste the string to the app"
+    pyperclip.copy(new_string)
 
 def resetButtons():
     for i in range(13):
