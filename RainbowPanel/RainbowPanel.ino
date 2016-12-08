@@ -167,7 +167,6 @@ const uint8_t brightness = 1;
 String str0;
 String str1;
 String str2;
-String str3;
 String finalStr;
 
 /* Converts a color from HSV to RGB.
@@ -267,15 +266,13 @@ void loop()
     }
     if (c.length() != 0) {
       if (c[0] == '0') {
-        str0 = c.substring(1,51);
+        str0 = c.substring(1,61);
       } else if (c[0] == '1') {
-        str1 = c.substring(1,51);
+        str1 = c.substring(1,61);
       } else if (c[0] == '2') {
         str2 = c.substring(1,51);
-      } else if (c[0] == '3') {
-        str3 = c.substring(1,21);
       }
-      finalStr = str0 + str1 + str2 + str3;
+      finalStr = str0 + str1 + str2;
       for (uint8_t x = 0; x < ledPanelWidth; x++)
       {
         for (uint8_t y = 0; y < ledPanelHeight; y++)
@@ -305,19 +302,21 @@ void loop()
           not_colors[x*13+y] = (rgb_color){0,0,0}; 
         }
       }
-      while (true) {
-        if (str3[19] == '1') {
-          ledStrip.write(colors, ledCount, brightness);
-          Serial.println(c[ledCount]);
-          delay(500);
-          ledStrip.write(not_colors, ledCount, brightness);
-          delay(500);
+      if (c[0] == '2') {
+        while (true) {
+          if (str2[49] == '1') {
+            ledStrip.write(colors, ledCount, brightness);
+            Serial.println(c[ledCount]);
+            delay(500);
+            ledStrip.write(not_colors, ledCount, brightness);
+            delay(500);
+          }
+          else {
+            ledStrip.write(colors, ledCount, brightness);
+          }
+          if (Serial.available() || ble.available())
+             break;
         }
-        else {
-          ledStrip.write(colors, ledCount, brightness);
-        }
-        if (Serial.available() || ble.available())
-           break;
       }
     }
     else {
