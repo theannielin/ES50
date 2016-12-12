@@ -24,7 +24,7 @@ class MyButton:
         self.yval = y
 
     def toggle_text(self, row, column):
-        """toggle button text between off (X), R, O, Y, G, B, P"""
+        # toggle button text between X (off), R, O, Y, G, B, and P
         if self.btn["text"] == "X":
             self.btn["text"] = "R"
             self.btn["highlightbackground"] ="red"
@@ -81,7 +81,7 @@ def sendInfo():
     new_string = new_string + '1' + string[60: 120] + '\n'
 
     # Change final character for flash feature (1 is on, 0 is off) on last string
-    if (flashButt.btn["text"]=="Flash ON"):
+    if (flashButt.btn["text"] == "Flash ON"):
         new_string = new_string + '2' + string[120:] + '1'
     else:
         new_string = new_string + '2' + string[120:] + '0'
