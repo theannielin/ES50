@@ -2,11 +2,7 @@
 # Authors: Hailey James, Melissa ChaeHyun Lee, Annie Lin, Stephen Slater
 
 from Tkinter import *
-import serial
 import pyperclip
-
-serial_speed = 115200
-serial_port = '/dev/cu.usbmodem1411'
 
 # Create & configure root
 root = Tk()
@@ -17,7 +13,7 @@ Grid.columnconfigure(root, 0, weight=1)
 frame=Frame(root)
 frame.grid(row=0, column=0, sticky=N+S+E+W)
 
-# Global variables
+# Global variables for grid and buttons
 matrix = [[0 for i in range(13)] for j in range(13)]
 buttons = []
 
@@ -58,6 +54,7 @@ class MyButton:
             self.btn["highlightbackground"] ="white"
             matrix[row][column] = 0
 
+# Create string of each button's color (number)
 def sendInfo():
     print matrix
     string = ''
@@ -66,6 +63,8 @@ def sendInfo():
         for j in range(13):
             string += str(matrix[i][j])
     for i in range(13):
+
+        # Flip indices of every other row to match serpentine structure of LED grid
         if i == 0:
             new_strings.append(string[13*i+12:13*i:-1])
             new_strings.append(string[0])
@@ -75,24 +74,23 @@ def sendInfo():
             new_strings.append(string[13*i:13*i+13])
     string = "".join(new_strings)
     print string
+
+    # Create first two strings to be sent
     new_string = ''
     new_string = new_string + '0' + string[0: 60] + '\n'
     new_string = new_string + '1' + string[60: 120] + '\n'
+
+    # Change final character for flash feature (1 is on, 0 is off) on last string
     if (flashButt.btn["text"]=="Flash ON"):
         new_string = new_string + '2' + string[120:] + '1'
     else:
         new_string = new_string + '2' + string[120:] + '0'
     print new_string
-    # try:
-    #     print "Trying via USB"
-    #     ser = serial.Serial(serial_port, serial_speed, timeout=1)
-    #     ser.write(string)
-    #     ser.close()
-    #     print "Done USB"
-    # except: 
-    print "CRY, just paste the string to the app"
+
+    # Copy string of colors to clipboard
     pyperclip.copy(new_string)
 
+# Update button values and colors
 def resetButtons():
     for i in range(13):
         for j in range(13):
@@ -117,6 +115,8 @@ def resetButtons():
             elif matrix[i][j] == 6:
                 buttons[i*13+j].btn["text"] = "P"
                 buttons[i*13+j].btn["highlightbackground"] ="purple"
+
+# Built-in buttons on side panel: send, flash, clear, and presets
 
 class sendButton:
     def __init__(self):
@@ -146,6 +146,8 @@ class clearButton:
             button.btn["text"] = "X"
             button.btn["highlightbackground"] ="white"
         sendInfo() 
+
+# Preset designs: rainbow, ES50, heart, tree
 
 class rainbowButton:
     def __init__(self):
@@ -203,7 +205,7 @@ class treeButton:
         resetButtons()
         sendInfo()
 
-#Create a 13x13 (rows x columns) grid of buttons inside the frame
+# Create a 13x13 (rows x columns) grid of buttons inside the frame
 for row_index in range(13):
     Grid.rowconfigure(frame, row_index, weight=1)
     for col_index in range(13):
@@ -211,10 +213,13 @@ for row_index in range(13):
         myB.btn.grid(row=row_index, column=col_index, sticky=N+S+E+W)
         buttons.append(myB)
 
+# Button features
 flashButt = flashButton()
 flashButt.btn.grid(row=3, column=14, sticky=N+S+E+W)
+
 sendButt = sendButton()
 sendButt.btn.grid(row=4, column=14, sticky=N+S+E+W)
+
 clearButt = clearButton()
 clearButt.btn.grid(row=5, column=14, sticky=N+S+E+W)
 
