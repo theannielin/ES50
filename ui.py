@@ -28,7 +28,7 @@ class MyButton:
         self.yval = y
 
     def toggle_text(self, row, column):
-        """toggle button text between R and G and B"""
+        """toggle button text between off (X), R, O, Y, G, B, P"""
         if self.btn["text"] == "X":
             self.btn["text"] = "R"
             self.btn["highlightbackground"] ="red"
@@ -168,6 +168,7 @@ class surpriseButton:
     def sendSurprise(self):
         # ES50 Design
         design = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [5, 5, 5, 0, 5, 5, 0, 5, 5, 0, 5, 5, 5], [5, 0, 0, 0, 5, 0, 0, 5, 0, 0, 5, 0, 5], [5, 5, 0, 0, 5, 0, 0, 5, 5, 0, 5, 0, 5], [5, 0, 0, 0, 0, 5, 0, 0, 5, 0, 5, 0, 5], [5, 0, 0, 0, 0, 5, 0, 0, 5, 0, 5, 0, 5], [5, 5, 5, 0, 5, 5, 0, 5, 5, 0, 5, 5, 5], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]        # Note: Cannot simply reset matrix, has to be done like this
+        # Note: Cannot simply reset matrix, has to be done like this
         for i in range(13):
             for j in range(13):
                 matrix[i][j] = design[i][j]
