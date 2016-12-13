@@ -1,6 +1,17 @@
 # User interface for ES50 Fall 2016 Team 10: Customizable LED Jacket
 # Authors: Hailey James, Melissa ChaeHyun Lee, Annie Lin, Stephen Slater
 
+# Creates a 13x13 grid user interface corresponding to the 13x13 LED grid 
+# on the back of the jacket. 
+# Creates a string where each character correspond to the color of a given LED
+# in the grid. C
+# Changes background of button on user interface so user can 
+# create custom designs, or use the preset designs.
+# Toggle flashing lights feature.
+# The Arduino code will interpret the string and assign the colors
+
+# ***********************************************************************
+
 from Tkinter import *
 import pyperclip
 
