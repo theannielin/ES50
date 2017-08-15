@@ -17,3 +17,5 @@ When you are ready to upload your design to the jacket, click SEND!
 The data will be transferred via Bluetooth to the Arduino in the jacket.  
 
 See your design instantly and be "invitLED" to all of the parties!
+
+*Designed and created by Annie Lin, Hailey James, Melissa Lee, and Stephen Slater*
