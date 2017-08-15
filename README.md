@@ -13,7 +13,7 @@ Choose from preset designs (a rainbow, a tree, a heart, a surprise).
 Toggle flash on/off in the UI to affect the display of lights on the grid.  
 Want to restart your design? Click CLEAR. 
 
-When you are ready to upload your design to the jacket, click SEND! 
+When you are ready to upload your design to the jacket, click SEND!  
 The data will be transferred via Bluetooth to the Arduino in the jacket.  
 
 See your design instantly and be "invitLED" to all of the parties!
